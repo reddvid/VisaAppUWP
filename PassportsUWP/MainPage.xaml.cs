@@ -44,7 +44,7 @@ namespace PassportsUWP
 
             var region = GetDeviceRegion();
 
-            cboxFrom1.SelectedIndex = countries.IndexOf(countries.Where(x => x.Name == region).FirstOrDefault());
+            cboxFrom1.Text = countries.Where(x => x.Name == region).FirstOrDefault().Name;
         }
 
         private string GetDeviceRegion()
@@ -68,8 +68,8 @@ namespace PassportsUWP
         {
             // StorageFile sampleFile = await StorageFile.GetFileFromPathAsync("ms-appx:///index.csv");
             FileInfo myFile = new FileInfo("index.csv");
-
-            var cb = new ComboBox();
+            var countries = new CountryList().Countries();
+            var cb = new AutoSuggestBox();
             var lv = new ListView();
 
             if (t == "1")
@@ -101,8 +101,6 @@ namespace PassportsUWP
             // Open Excel File (Roaming)
             if (myFile != null && cb != null && lv != null)
             {
-                Debug.WriteLine($"Success: { myFile.FullName } \n{ cb.SelectedIndex }");
-
                 Chilkat.Csv csv = new Chilkat.Csv();
                 csv.HasColumnNames = false;
 
@@ -116,7 +114,7 @@ namespace PassportsUWP
                 Debug.WriteLine($"CSV success");
 
                 var results = new List<string>();
-                int row = cb.SelectedIndex + 1;
+                int row = countries.IndexOf(countries.Where(x => x.Name == cb.Text).FirstOrDefault()) + 1;
                 int n = csv.NumColumns;
                 for (int col = 1; col < n; col++)
                 {
@@ -216,6 +214,79 @@ namespace PassportsUWP
                 UnifySelection(x);
             }
             catch { }
+        }
+
+        private void sBoxFrom_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                //Set the ItemsSource to be your filtered dataset
+                if (sender.Text.Length > 2)
+                {
+                    sender.ItemsSource = new CountryList().Countries().Where(x => x.Name.ToLower().Contains(sender.Text.ToLower()));
+                }
+                else
+                {
+                    sender.ItemsSource = new CountryList().Countries();
+                }
+            }
+            else if (args.Reason == AutoSuggestionBoxTextChangeReason.ProgrammaticChange)
+            {
+               var cb = sender as AutoSuggestBox;
+                ReadCsv(cb.Tag as string);
+            }
+
+            //var cb = sender as AutoSuggestBox;
+
+            ////if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            ////    ReadCsv(cb.Tag as string);
+            ////else if (args.Reason == AutoSuggestionBoxTextChangeReason.SuggestionChosen)
+            //    ReadCsv(cb.Tag as string);
+        }
+
+        private void sBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var cb = sender as AutoSuggestBox;
+
+            // cb.IsSuggestionListOpen = true;
+
+            //if (string.IsNullOrEmpty(cb.Text))
+            //{
+                cb.ItemsSource = new CountryList().Countries();
+            //}
+            //else
+            //{
+            //    cb.ItemsSource = new CountryList().Countries().Where(x => x.Name.ToLower().Contains(cb.Text.ToLower()));
+            //}
+        }
+
+        private void cboxFrom_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            sender.Text = (args.SelectedItem as CountryList).Name;
+
+            var cb = sender as AutoSuggestBox;
+            ReadCsv(cb.Tag as string);
+
+            sender.Focus(FocusState.Unfocused);
+        }
+
+        private void cboxFrom1_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (args.ChosenSuggestion != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+                sender.Text = (args.ChosenSuggestion as CountryList).Name;
+
+                var cb = sender as AutoSuggestBox;
+                ReadCsv(cb.Tag as string);
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
+               
+                    sender.Text = new CountryList().Countries().Where(x => x.Name.ToLower().Contains(args.QueryText.ToLower())).First().Name;
+               
+            }
         }
     }
 }

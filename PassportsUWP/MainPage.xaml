@@ -7,6 +7,7 @@
     xmlns:local="using:PassportsUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontFamily="Assets/OpenSans-Regular.ttf#Open Sans"
     Loaded="Page_Loaded"
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
@@ -14,19 +15,34 @@
     <Page.Resources>
         <helper:StringToBackgroundColorConverter x:Key="convStringToBg" />
 
-        <Style TargetType="ListView">
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
+        </Style>
+
+        <Style x:Key="DisabledScroll" TargetType="ListView">
             <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
         </Style>
 
         <Style TargetType="ComboBox">
             <Setter Property="PlaceholderText" Value="Select country..." />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Margin" Value="2,0" />
+            <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
         </Style>
 
-        <DataTemplate x:Key="countryItemTemplate">
+        <Style
+            x:Key="CaptionTextBlockStyle"
+            BasedOn="{StaticResource BaseTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+
+        <DataTemplate x:Key="countryItemTemplate" x:DataType="helper:CountryList">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="32" />
@@ -38,17 +54,17 @@
                     VerticalAlignment="Center"
                     Background="WhiteSmoke">
                     <Image
-                        Width="24"
-                        Height="16"
-                        Source="{Binding IsoCode}"
+                        Width="18"
+                        Height="12"
+                        Source="{x:Bind IsoCode}"
                         Stretch="Fill" />
                 </Border>
                 <TextBlock
                     Grid.Column="1"
                     Margin="12,0"
                     VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding Name}" />
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Name}" />
             </Grid>
         </DataTemplate>
 
@@ -58,7 +74,7 @@
                     x:Name="tbStatus"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{Binding}" />
             </Border>
         </DataTemplate>
@@ -71,6 +87,7 @@
             <Setter Property="Padding" Value="2" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="MinHeight" Value="32" />
+            <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
         </Style>
     </Page.Resources>
 
@@ -80,7 +97,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="320" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="240"
+                MaxWidth="320" />
             <ColumnDefinition Width="0" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition x:Name="gMain1" Width="*" />
@@ -99,41 +119,60 @@
             VerticalAlignment="Top"
             FontWeight="Bold"
             Text="FROM:" />
-        <ComboBox
+        <AutoSuggestBox
             x:Name="cboxFrom1"
-            Grid.Column="2"
+            Grid.Column="2" QuerySubmitted="cboxFrom1_QuerySubmitted"
             VerticalAlignment="Bottom"
+            AutoMaximizeSuggestionArea="True"
+            GotFocus="sBox_GotFocus"
             ItemTemplate="{StaticResource countryItemTemplate}"
-            SelectionChanged="cboxFrom_SelectionChanged"
-            Tag="1" />
-        <ComboBox
+            QueryIcon="Find"
+            ScrollViewer.VerticalScrollMode="Enabled"
+            SuggestionChosen="cboxFrom_SuggestionChosen"
+            Tag="1"
+            TextChanged="sBoxFrom_TextChanged"
+            TextMemberPath="Name" />
+        <AutoSuggestBox
             x:Name="cboxFrom2"
             Grid.Column="3"
             VerticalAlignment="Bottom"
+            GotFocus="sBox_GotFocus"
             ItemTemplate="{StaticResource countryItemTemplate}"
-            SelectionChanged="cboxFrom_SelectionChanged"
-            Tag="2" />
-        <ComboBox
+            Tag="2"
+            TextChanged="sBoxFrom_TextChanged"
+            TextMemberPath="Name"
+            UpdateTextOnSelect="False" />
+        <AutoSuggestBox
             x:Name="cboxFrom3"
             Grid.Column="4"
             VerticalAlignment="Bottom"
+            DisplayMemberPath="Name"
+            GotFocus="sBox_GotFocus"
             ItemTemplate="{StaticResource countryItemTemplate}"
-            SelectionChanged="cboxFrom_SelectionChanged"
-            Tag="3" />
-        <ComboBox
+            SuggestionChosen="cboxFrom_SuggestionChosen"
+            Tag="3"
+            TextChanged="sBoxFrom_TextChanged"
+            UpdateTextOnSelect="False" />
+        <AutoSuggestBox
             x:Name="cboxFrom4"
             Grid.Column="5"
             VerticalAlignment="Bottom"
+            GotFocus="sBox_GotFocus"
             ItemTemplate="{StaticResource countryItemTemplate}"
-            SelectionChanged="cboxFrom_SelectionChanged"
-            Tag="4" />
-        <ComboBox
+            SuggestionChosen="cboxFrom_SuggestionChosen"
+            Tag="4"
+            TextChanged="sBoxFrom_TextChanged"
+            UpdateTextOnSelect="False" />
+        <AutoSuggestBox
             x:Name="cboxFrom5"
             Grid.Column="6"
             VerticalAlignment="Bottom"
+            GotFocus="sBox_GotFocus"
             ItemTemplate="{StaticResource countryItemTemplate}"
-            SelectionChanged="cboxFrom_SelectionChanged"
-            Tag="5" />
+            SuggestionChosen="cboxFrom_SuggestionChosen"
+            Tag="5"
+            TextChanged="sBoxFrom_TextChanged"
+            UpdateTextOnSelect="False" />
 
         <ScrollViewer Grid.Row="2" Grid.ColumnSpan="8">
             <Grid>
@@ -171,35 +210,40 @@
                     Grid.Column="1"
                     ItemContainerStyle="{StaticResource visaItemStyle}"
                     ItemTemplate="{StaticResource visaItemTemplate}"
-                    SelectionChanged="lv_SelectionChanged" />
+                    SelectionChanged="lv_SelectionChanged"
+                    Style="{StaticResource DisabledScroll}" />
                 <ListView
                     x:Name="lvFrom2"
                     Grid.Row="1"
                     Grid.Column="2"
                     ItemContainerStyle="{StaticResource visaItemStyle}"
                     ItemTemplate="{StaticResource visaItemTemplate}"
-                    SelectionChanged="lv_SelectionChanged" />
+                    SelectionChanged="lv_SelectionChanged"
+                    Style="{StaticResource DisabledScroll}" />
                 <ListView
                     x:Name="lvFrom3"
                     Grid.Row="1"
                     Grid.Column="3"
                     ItemContainerStyle="{StaticResource visaItemStyle}"
                     ItemTemplate="{StaticResource visaItemTemplate}"
-                    SelectionChanged="lv_SelectionChanged" />
+                    SelectionChanged="lv_SelectionChanged"
+                    Style="{StaticResource DisabledScroll}" />
                 <ListView
                     x:Name="lvFrom4"
                     Grid.Row="1"
                     Grid.Column="4"
                     ItemContainerStyle="{StaticResource visaItemStyle}"
                     ItemTemplate="{StaticResource visaItemTemplate}"
-                    SelectionChanged="lv_SelectionChanged" />
+                    SelectionChanged="lv_SelectionChanged"
+                    Style="{StaticResource DisabledScroll}" />
                 <ListView
                     x:Name="lvFrom5"
                     Grid.Row="1"
                     Grid.Column="5"
                     ItemContainerStyle="{StaticResource visaItemStyle}"
                     ItemTemplate="{StaticResource visaItemTemplate}"
-                    SelectionChanged="lv_SelectionChanged" />
+                    SelectionChanged="lv_SelectionChanged"
+                    Style="{StaticResource DisabledScroll}" />
             </Grid>
         </ScrollViewer>
     </Grid>

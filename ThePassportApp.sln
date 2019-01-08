@@ -7,7 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassportsUWP", "PassportsUW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperLibrary", "HelperLibrary\HelperLibrary.csproj", "{60EBA2C8-2025-4338-B2B0-373DA77AE3F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisaCheck.Android", "VisaCheck\VisaCheck.Android\VisaCheck.Android.csproj", "{58B714A3-9384-468B-9A92-E6EF74814151}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VisaCheck", "VisaCheck\VisaCheck\VisaCheck.shproj", "{7E162033-039C-439F-9C49-1AF9192FF7A1}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		VisaCheck\VisaCheck\VisaCheck.projitems*{58b714a3-9384-468b-9a92-e6ef74814151}*SharedItemsImports = 4
+		VisaCheck\VisaCheck\VisaCheck.projitems*{7e162033-039c-439f-9c49-1af9192ff7a1}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -55,6 +63,30 @@ Global
 		{60EBA2C8-2025-4338-B2B0-373DA77AE3F5}.Release|x64.Build.0 = Release|x64
 		{60EBA2C8-2025-4338-B2B0-373DA77AE3F5}.Release|x86.ActiveCfg = Release|x86
 		{60EBA2C8-2025-4338-B2B0-373DA77AE3F5}.Release|x86.Build.0 = Release|x86
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|ARM.Build.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x64.Build.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x86.Build.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|ARM.ActiveCfg = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|ARM.Build.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|ARM.Deploy.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x64.ActiveCfg = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x64.Build.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x64.Deploy.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x86.ActiveCfg = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x86.Build.0 = Release|Any CPU
+		{58B714A3-9384-468B-9A92-E6EF74814151}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
